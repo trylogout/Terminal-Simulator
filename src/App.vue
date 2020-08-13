@@ -9,6 +9,17 @@
   </div>
 </template>
 
+//////////////////////////
+// Files Classification
+// 0 = file
+// 1 = dir
+// 2 = specDir
+// 3 = tmp
+//////////////////////////
+// Accesss Classification
+// 0 = Accesss Denied
+// 1 = Accesss Allowed
+
 <script>
 export default {
   name: "App",
@@ -19,6 +30,21 @@ export default {
       newDirName: "",
       tempDirName: "",
       parentDirName: " ",
+      dirRootArr: [
+        ["bin", "dev", "lib", "libx32", "mnt", "root", "snap", "tmp"],
+        ["boot", "etc", "lib32", "lost+found", "opt", "run", "srv", "usr"],
+        ["cdrom", "home", "lib64", "tools", "proc", "sbin", "sys", "var"]
+      ],
+      dirRootClass: [
+        [2, 1, 2, 2, 1, 1, 1, 3],
+        [1, 1, 2, 1, 1, 1, 1, 1],
+        [1, 1, 2, 1, 1, 2, 1, 1]
+      ],
+      dirRootAcc: [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0]
+      ],
       dir: "/home/henry",
       banner: {
         header: "E-Corp Shell",
@@ -82,6 +108,7 @@ export default {
   },
   methods: {
     prompt(value) {
+      let td = "";
       //////////////////////////////////////////////////////////////////////////////////////////
       // TESTING COMMANDS
       if (value.trim().toLowerCase() === "test_temp_dir") {
@@ -99,67 +126,75 @@ export default {
           .pop();
       } else if (value.trim().toLowerCase() === "test_err_perm") {
         this.send_to_terminal = `<p style="color:red;">[ERROR] You don't have permission to access this directory</p>`;
-      } else if (value.trim().toLowerCase() === "test_err_not_found") {
-        this.send_to_terminal = `<p style="color:red;">[ERROR] File or directory "${value}" not found</p>`;
       } else if (value.trim().toLowerCase() === "main_test") {
-        this.send_to_terminal = `<table class="table" style="width:70%; margin-top: 5px;">
-  <tr>
-      <td><p style="color:green;">bin</p></td>
-      <td><p style="color:#838383;">dev</p></td>
-      <td><p style="color:green;">lib</p></td>
-      <td><p style="color:green;">libx32</p></td>
-      <td><p style="color:#838383;">mnt</p></td>
-      <td><p style="color:#838383;">root</p></td>
-      <td><p style="color:#838383;">snap</p></td>
-      <td bgcolor=green><p style="color:#151515;">tmp</p></td>
-  </tr>
-  <tr>
-      <td><p style="color:#838383;">boot</p></td>
-      <td><p style="color:#838383;">etc</p></td>
-      <td><p style="color:green;">lib32</p></td>
-      <td><p style="color:#838383;">lost+found</p></td>
-      <td><p style="color:#838383;">opt</p></td>
-      <td><p style="color:#838383;">run</p></td>
-      <td><p style="color:#838383;">srv</p></td>
-      <td><p style="color:#838383;">usr</p></td>
-  </tr>
-  <tr>
-      <td><p style="color:#838383;">cdrom</p></td>
-      <td><p style="color:#838383;">home</p></td>
-      <td><p style="color:green;">lib64</p></td>
-      <td><p style="color:#838383;">tools</p></td>
-      <td><p style="color:#838383;">proc</p></td>
-      <td><p style="color:green;">sbin</p></td>
-      <td><p style="color:#838383;">sys</p></td>
-      <td><p style="color:#838383;">var</p></td>
-  </tr>
-</table>`;
-      }
+        for (let iCount = 0; iCount < this.$data.dirRootArr.length; iCount++) {
+          td += "<tr>";
+          for (
+            let jCount = 0;
+            jCount < this.$data.dirRootArr[iCount].length;
+            jCount++
+          ) {
+            if (this.$data.dirRootClass[iCount][jCount] === 1) {
+              td +=
+                "<td><p style='color:#838383;'>" +
+                this.$data.dirRootArr[iCount][jCount] +
+                "</p></td>";
+            } else if (this.$data.dirRootClass[iCount][jCount] === 2) {
+              td +=
+                "<td><p style='color:green;'>" +
+                this.$data.dirRootArr[iCount][jCount] +
+                "</p></td>";
+            } else if (this.$data.dirRootClass[iCount][jCount] === 3) {
+              td +=
+                "<td bgcolor=green><p style='color:#151515;'>" +
+                this.$data.dirRootArr[iCount][jCount] +
+                "</p></td>";
+            }
+          }
+          td += "</tr>";
+        }
+        this.send_to_terminal =
+          '<table class="table" style="width:70%; margin-top: 5px;">' +
+          td +
+          "</table>";
+      } else if (value.trim().toLowerCase() === "find_test") {
+        let serVaal = "tools";
+        for (let iCount = 0; iCount < this.$data.dirRootArr.length; iCount++) {
+          for (
+            let jCount = 0;
+            jCount < this.$data.dirRootArr[iCount].length;
+            jCount++
+          ) {
+            if (this.$data.dirRootArr[iCount][jCount] === serVaal) {
+              this.send_to_terminal = `${iCount} and ${jCount} : acc => ${
+                this.$data.dirRootAcc[iCount][jCount]
+              }`;
+            }
+          }
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////
+        // main commands
 
-      //////////////////////////////////////////////////////////////////////////////////////////
-      // main commands
-
-      // cd commands
-      else if (
+        // cd commands
+      } else if (
         value
           .trim()
           .toLowerCase()
-          .slice(0, 2) === "cd"
+          .match(/[^\s]+/g)[0] === "cd"
       ) {
         this.$data.newDir = value
           .trim()
           .toLowerCase()
           .match(/[^\s]+/g)[1];
 
-        if (this.$data.newDir !== undefined){
+        if (this.$data.newDir !== undefined) {
           this.$data.newDirName =
-          this.$data.newDir.slice(0, 1).toUpperCase() +
-          this.$data.newDir.slice(1, this.$data.newDir.length);
+            this.$data.newDir.slice(0, 1).toUpperCase() +
+            this.$data.newDir.slice(1, this.$data.newDir.length);
         } else {
           this.$data.newDir = undefined;
         }
 
-        
         this.$data.tempDirName = this.$data.dir
           .split("\\")
           .pop()
@@ -175,23 +210,24 @@ export default {
 
         if (
           (this.$data.newDir === "data" ||
-          this.$data.newDir === "library" ||
-          this.$data.newDir === "applications"
-          ) &&
+            this.$data.newDir === "library" ||
+            this.$data.newDir === "applications") &&
           this.$data.tempDirName === "henry"
         ) {
-          this.$data.dir = 
-          this.$data.parentDirName + "/" // Parent folder
-          + this.$data.tempDirName + "/" // Current folder 
-          + this.$data.newDirName;       // New directory where we go
+          this.$data.dir =
+            this.$data.parentDirName +
+            "/" + // Parent folder
+            this.$data.tempDirName +
+            "/" + // Current folder
+            this.$data.newDirName; // New directory where we go
 
           this.$data.banner.sign = `Henry@Ecorp:/~${this.$data.newDirName}#`;
           this.$data.newDir = undefined;
-
         } else if (
           this.$data.newDir === ".." &&
           this.$data.parentDirName !== undefined
         ) {
+          this.send_to_terminal = this.$data.parentDirName;
           if (this.$data.parentDirName === "henry") {
             this.$data.banner.sign = `Henry@Ecorp:~#`;
             this.$data.dir = "/home/henry";
@@ -199,17 +235,17 @@ export default {
             this.$data.banner.sign = `Henry@Ecorp:~${
               this.$data.parentDirName
             }#`;
-            this.$data.dir = "/home/henry";
+            this.$data.dir = this.$data.dir.slice(
+              0,
+              this.$data.dir.lastIndexOf("/")
+            );
           }
-
         } else if (this.$data.newDir === undefined) {
           this.$data.banner.sign = "Henry@Ecorp:~#";
-          this.$data.banner.sign = `Henry@Ecorp:~#`;
           this.$data.dir = "/home/henry";
-
         } else {
           this.send_to_terminal = `<p style="color:red;">[ERROR] File or directory "${
-            this.$data.newpDir
+            this.$data.newDir
           }" not found</p>`;
         }
       }
@@ -237,7 +273,7 @@ export default {
         this.send_to_terminal = this.$data.dir;
       } else {
         this.send_to_terminal = `'${value}' is not recognized as an internal command or external,
-an executable program or a batch file`;
+an executable program or a script`;
       }
     }
   }
