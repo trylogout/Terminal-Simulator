@@ -15,6 +15,11 @@ export default {
   data() {
     return {
       send_to_terminal: "",
+      newDir: "",
+      newDirName: "",
+      tempDirName: "",
+      parentDirName: " ",
+      dir: "/home/henry",
       banner: {
         header: "E-Corp Shell",
         helpHeader: 'Enter "help" for more information.',
@@ -28,10 +33,7 @@ export default {
             "https://www.e-corp-usa.com/images/home-v2/ecorp_logo_white.png",
           width: 60,
           height: 80
-        },
-        pwd: "",
-        dir_parent: " ",
-        dir: "/home/henry"
+        }
       },
       commands: [
         {
@@ -80,6 +82,8 @@ export default {
   },
   methods: {
     prompt(value) {
+      //////////////////////////////////////////////////////////////////////////////////////////
+      // TESTING COMMANDS
       if (value.trim().toLowerCase() === "test_temp_dir") {
         this.send_to_terminal = this.$data.dir
           .split("\\")
@@ -87,18 +91,131 @@ export default {
           .split("/")
           .pop();
       } else if (value.trim().toLowerCase() === "test_par_dir") {
-        this.send_to_terminal = this.$data.dir.slice(
-          0,
-          this.$data.dir.lastIndexOf("/")
-        );
-      } else if (value.trim().toLowerCase() === "cd data") {
-        this.$data.banner.sign = "Henry@Ecorp:/~Data#";
-      } else if (value.trim().toLowerCase() === "cd") {
-        this.$data.banner.sign = "Henry@Ecorp:~#";
-        this.$data.dir = "/home/henry";
-      } else if (value.trim().toLowerCase() === "ls") {
+        this.send_to_terminal = this.$data.dir
+          .slice(0, this.$data.dir.lastIndexOf("/"))
+          .split("\\")
+          .pop()
+          .split("/")
+          .pop();
+      } else if (value.trim().toLowerCase() === "test_err_perm") {
+        this.send_to_terminal = `<p style="color:red;">[ERROR] You don't have permission to access this directory</p>`;
+      } else if (value.trim().toLowerCase() === "test_err_not_found") {
+        this.send_to_terminal = `<p style="color:red;">[ERROR] File or directory "${value}" not found</p>`;
+      } else if (value.trim().toLowerCase() === "main_test") {
+        this.send_to_terminal = `<table class="table" style="width:70%; margin-top: 5px;">
+  <tr>
+      <td><p style="color:green;">bin</p></td>
+      <td><p style="color:#838383;">dev</p></td>
+      <td><p style="color:green;">lib</p></td>
+      <td><p style="color:green;">libx32</p></td>
+      <td><p style="color:#838383;">mnt</p></td>
+      <td><p style="color:#838383;">root</p></td>
+      <td><p style="color:#838383;">snap</p></td>
+      <td bgcolor=green><p style="color:#151515;">tmp</p></td>
+  </tr>
+  <tr>
+      <td><p style="color:#838383;">boot</p></td>
+      <td><p style="color:#838383;">etc</p></td>
+      <td><p style="color:green;">lib32</p></td>
+      <td><p style="color:#838383;">lost+found</p></td>
+      <td><p style="color:#838383;">opt</p></td>
+      <td><p style="color:#838383;">run</p></td>
+      <td><p style="color:#838383;">srv</p></td>
+      <td><p style="color:#838383;">usr</p></td>
+  </tr>
+  <tr>
+      <td><p style="color:#838383;">cdrom</p></td>
+      <td><p style="color:#838383;">home</p></td>
+      <td><p style="color:green;">lib64</p></td>
+      <td><p style="color:#838383;">tools</p></td>
+      <td><p style="color:#838383;">proc</p></td>
+      <td><p style="color:green;">sbin</p></td>
+      <td><p style="color:#838383;">sys</p></td>
+      <td><p style="color:#838383;">var</p></td>
+  </tr>
+</table>`;
+      }
+
+      //////////////////////////////////////////////////////////////////////////////////////////
+      // main commands
+
+      // cd commands
+      else if (
+        value
+          .trim()
+          .toLowerCase()
+          .slice(0, 2) === "cd"
+      ) {
+        this.$data.newDir = value
+          .trim()
+          .toLowerCase()
+          .match(/[^\s]+/g)[1];
+
+        if (this.$data.newDir !== undefined){
+          this.$data.newDirName =
+          this.$data.newDir.slice(0, 1).toUpperCase() +
+          this.$data.newDir.slice(1, this.$data.newDir.length);
+        } else {
+          this.$data.newDir = undefined;
+        }
+
+        
+        this.$data.tempDirName = this.$data.dir
+          .split("\\")
+          .pop()
+          .split("/")
+          .pop();
+
+        this.$data.parentDirName = this.$data.dir
+          .slice(0, this.$data.dir.lastIndexOf("/"))
+          .split("\\")
+          .pop()
+          .split("/")
+          .pop();
+
+        if (
+          (this.$data.newDir === "data" ||
+          this.$data.newDir === "library" ||
+          this.$data.newDir === "applications"
+          ) &&
+          this.$data.tempDirName === "henry"
+        ) {
+          this.$data.dir = 
+          this.$data.parentDirName + "/" // Parent folder
+          + this.$data.tempDirName + "/" // Current folder 
+          + this.$data.newDirName;       // New directory where we go
+
+          this.$data.banner.sign = `Henry@Ecorp:/~${this.$data.newDirName}#`;
+          this.$data.newDir = undefined;
+
+        } else if (
+          this.$data.newDir === ".." &&
+          this.$data.parentDirName !== undefined
+        ) {
+          if (this.$data.parentDirName === "henry") {
+            this.$data.banner.sign = `Henry@Ecorp:~#`;
+            this.$data.dir = "/home/henry";
+          } else {
+            this.$data.banner.sign = `Henry@Ecorp:~${
+              this.$data.parentDirName
+            }#`;
+            this.$data.dir = "/home/henry";
+          }
+
+        } else if (this.$data.newDir === undefined) {
+          this.$data.banner.sign = "Henry@Ecorp:~#";
+          this.$data.banner.sign = `Henry@Ecorp:~#`;
+          this.$data.dir = "/home/henry";
+
+        } else {
+          this.send_to_terminal = `<p style="color:red;">[ERROR] File or directory "${
+            this.$data.newpDir
+          }" not found</p>`;
+        }
+      }
+      // ls commands
+      else if (value.trim().toLowerCase() === "ls") {
         if (this.$data.banner.sign.slice(-5).toLowerCase() === "data#") {
-          this.$data.dir = "/home/henry/Data/";
           this.send_to_terminal = "Data_Files.dat";
         } else {
           this.send_to_terminal = `<table class="table" style="width:70%; margin-top: 5px;">
@@ -114,41 +231,10 @@ export default {
               </tr>
             </table>`;
         }
+
+        // other commands
       } else if (value.trim().toLowerCase() === "pwd") {
-        this.send_to_terminal = "PWD_EX";
-      } else if (value.trim().toLowerCase() === "main_test") {
-        this.send_to_terminal = `<table class="table" style="width:70%; margin-top: 5px;">
-    <tr>
-        <td><p style="color:green;">bin</p></td>
-        <td><p style="color:#838383;">dev</p></td>
-        <td><p style="color:green;">lib</p></td>
-        <td><p style="color:green;">libx32</p></td>
-        <td><p style="color:#838383;">mnt</p></td>
-        <td><p style="color:#838383;">root</p></td>
-        <td><p style="color:#838383;">snap</p></td>
-        <td bgcolor=green><p style="color:#151515;">tmp</p></td>
-    </tr>
-    <tr>
-        <td><p style="color:#838383;">boot</p></td>
-        <td><p style="color:#838383;">etc</p></td>
-        <td><p style="color:green;">lib32</p></td>
-        <td><p style="color:#838383;">lost+found</p></td>
-        <td><p style="color:#838383;">opt</p></td>
-        <td><p style="color:#838383;">run</p></td>
-        <td><p style="color:#838383;">srv</p></td>
-        <td><p style="color:#838383;">usr</p></td>
-    </tr>
-    <tr>
-        <td><p style="color:#838383;">cdrom</p></td>
-        <td><p style="color:#838383;">home</p></td>
-        <td><p style="color:green;">lib64</p></td>
-        <td><p style="color:#838383;">media</p></td>
-        <td><p style="color:#838383;">proc</p></td>
-        <td><p style="color:green;">sbin</p></td>
-        <td><p style="color:#838383;">sys</p></td>
-        <td><p style="color:#838383;">var</p></td>
-    </tr>
-</table>`;
+        this.send_to_terminal = this.$data.dir;
       } else {
         this.send_to_terminal = `'${value}' is not recognized as an internal command or external,
 an executable program or a batch file`;
