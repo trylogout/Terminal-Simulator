@@ -31,20 +31,166 @@ export default {
       tempDirName: "",
       parentDirName: " ",
       dirRootArr: [
-        ["bin", "dev", "lib", "libx32", "mnt", "root", "snap", "tmp"],
-        ["boot", "etc", "lib32", "lost+found", "opt", "run", "srv", "usr"],
-        ["cdrom", "home", "lib64", "tools", "proc", "sbin", "sys", "var"]
+        "bin",
+        "dev",
+        "lib",
+        "libx32",
+        "mnt",
+        "root",
+        "snap",
+        "tmp",
+        "boot",
+        "etc",
+        "lib32",
+        "lost+found",
+        "opt",
+        "run",
+        "srv",
+        "usr",
+        "cdrom",
+        "home",
+        "lib64",
+        "tools",
+        "proc",
+        "sbin",
+        "sys",
+        "var"
       ],
       dirRootClass: [
-        [2, 1, 2, 2, 1, 1, 1, 3],
-        [1, 1, 2, 1, 1, 1, 1, 1],
-        [1, 1, 2, 1, 1, 2, 1, 1]
+        2,
+        1,
+        2,
+        2,
+        1,
+        1,
+        1,
+        3,
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        1
       ],
       dirRootAcc: [
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0]
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
       ],
+      dirHomeArr: [
+        "efhuiu3rh37d.dat",
+        "Applications",
+        "Library",
+        "printers.xml",
+        "Data",
+        "Desktop",
+        "Documents",
+        "id_rsa.pub"
+      ],
+      dirHomeClass: [0, 1, 1, 0, 1, 1, 1, 0],
+      dirHomeAcc: [1, 1, 1, 1, 1, 1, 1, 1],
+      dirToolsArr: [
+        "MANIFEST.in",
+        "data",
+        "data.json",
+        "serializekiller.py",
+        "weblogic.py"
+      ],
+      dirToolsClass: [0, 1, 0, 0, 0],
+      dirToolsAcc: [1, 1, 1, 1, 1],
+
+      dirHomeDirArr: ["henry"],
+      dirHomeDirClass: [0],
+      dirHomeDirAcc: [1],
+
+      dirToolsDataArr: [
+        "0fgizn7z02.dat",
+        "3tkcl5awgy.dat",
+        "4jpg7moa9g.dat",
+        "5kkqf92qm5.dat",
+        "7op6ypyn7k.dat",
+        "h18i60bahg.dat",
+        "m91ft6waa8.dat",
+        "rigw2zlzcz.dat",
+        "s2vvij1g3k.dat",
+        "xf49c7k6j1.dat"
+      ],
+      dirToolsDataClass: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      dirToolsDataAcc: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+
+      dirTmpArr: [
+        "Untitled Document 1~sav1.txt",
+        "Untitled Document 1~sav2.txt",
+        "Untitled Document 1~sav3.txt",
+        "Untitled Document 1~sav4.txt",
+        "Untitled Document 1~sav5.txt",
+        "Untitled Document 1~sav6.txt"
+      ],
+      dirTmpClass: [0, 0, 0, 0, 0, 0],
+      dirTmpAcc: [1, 1, 1, 1, 1, 1],
+
+      dirDesktopArr: [
+        "HR Form Drafts",
+        "nems-integration.png",
+        "faa-swim-sfdps-architecture.jpg",
+        "faa-fri-nocc-artcc.png",
+        "FIXM_US_Extension_v3_0_Logical_Model_Diagrams.pdf"
+      ],
+      dirDesktopClass: [1, 0, 0, 0, 0],
+      dirDesktopAcc: [1, 1, 1, 1, 1],
+
+      dirHRFormDraftsArr: [
+        "draft_1.png",
+        "draft_2.png",
+        "draft_3.png",
+        "draft_4.png"
+      ],
+      dirHRFormDraftsClass: [0, 0, 0, 0],
+      dirHRFormDraftsAcc: [1, 1, 1, 1],
+
+      dirDocumentsArr: [
+        "Employee Forms.pdf",
+        "ground_floor.jpg",
+        "storage_map.jpg",
+        "pwd_memo.png",
+        "pwd_memo2.png",
+        "screening_flyer.jpg",
+        "gamenight_flyer.jpg"
+      ],
+      dirDocumentsClass: [0, 0, 0, 0, 0, 0, 0],
+      dirDocumentsAcc: [1, 1, 1, 1, 1, 1, 1],
+
       dir: "/home/henry",
       banner: {
         header: "E-Corp Shell",
@@ -89,7 +235,7 @@ export default {
   lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
           inet 127.0.0.1  netmask 255.0.0.0
           inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;
-          loop  txqueuelen 1000  (Локальная петля (Loopback))
+          loop  txqueuelen 1000  (Loacl Loopback(Loopback))
           RX packets 518  bytes 40060 (40.0 KB)
           RX errors 0  dropped 0  overruns 0  frame 0
           TX packets 518  bytes 40060 (40.0 KB)
@@ -126,52 +272,42 @@ export default {
           .pop();
       } else if (value.trim().toLowerCase() === "test_err_perm") {
         this.send_to_terminal = `<p style="color:red;">[ERROR] You don't have permission to access this directory</p>`;
+
+        // Files to html
       } else if (value.trim().toLowerCase() === "main_test") {
         for (let iCount = 0; iCount < this.$data.dirRootArr.length; iCount++) {
-          td += "<tr>";
-          for (
-            let jCount = 0;
-            jCount < this.$data.dirRootArr[iCount].length;
-            jCount++
-          ) {
-            if (this.$data.dirRootClass[iCount][jCount] === 1) {
-              td +=
-                "<td><p style='color:#838383;'>" +
-                this.$data.dirRootArr[iCount][jCount] +
-                "</p></td>";
-            } else if (this.$data.dirRootClass[iCount][jCount] === 2) {
-              td +=
-                "<td><p style='color:green;'>" +
-                this.$data.dirRootArr[iCount][jCount] +
-                "</p></td>";
-            } else if (this.$data.dirRootClass[iCount][jCount] === 3) {
-              td +=
-                "<td bgcolor=green><p style='color:#151515;'>" +
-                this.$data.dirRootArr[iCount][jCount] +
-                "</p></td>";
-            }
+          if (this.$data.dirRootClass[iCount] === 1) {
+            td +=
+              "<p style='color:#838383;'>" +
+              this.$data.dirRootArr[iCount] +
+              "</p>";
+          } else if (this.$data.dirRootClass[iCount] === 2) {
+            td +=
+              "<p style='color:green;'>" +
+              this.$data.dirRootArr[iCount] +
+              "</p>";
+          } else if (this.$data.dirRootClass[iCount] === 3) {
+            td +=
+              "<p style='color:#151515;background-color:green;width:30px;'>" +
+              this.$data.dirRootArr[iCount] +
+              "</p>";
           }
-          td += "</tr>";
         }
-        this.send_to_terminal =
-          '<table class="table" style="width:70%; margin-top: 5px;">' +
-          td +
-          "</table>";
+        this.send_to_terminal = td;
+
+        // Find by name
       } else if (value.trim().toLowerCase() === "find_test") {
         let serVaal = "tools";
+        let result = -1;
         for (let iCount = 0; iCount < this.$data.dirRootArr.length; iCount++) {
-          for (
-            let jCount = 0;
-            jCount < this.$data.dirRootArr[iCount].length;
-            jCount++
-          ) {
-            if (this.$data.dirRootArr[iCount][jCount] === serVaal) {
-              this.send_to_terminal = `${iCount} and ${jCount} : acc => ${
-                this.$data.dirRootAcc[iCount][jCount]
-              }`;
-            }
+          if (this.$data.dirRootArr[iCount] === serVaal) {
+            result = 0;
+            this.send_to_terminal = `${iCount} : acc => ${
+              this.$data.dirRootAcc[iCount]
+            } result: ${result}`;
           }
         }
+
         //////////////////////////////////////////////////////////////////////////////////////////
         // main commands
 
@@ -195,40 +331,96 @@ export default {
           this.$data.newDir = undefined;
         }
 
-        this.$data.tempDirName = this.$data.dir
-          .split("\\")
-          .pop()
-          .split("/")
-          .pop();
+        if (this.$data.dir !== "/") {
+          this.$data.tempDirName = this.$data.dir
+            .split("\\")
+            .pop()
+            .split("/")
+            .pop();
+        } else this.$data.tempDirName = "/";
 
-        this.$data.parentDirName = this.$data.dir
-          .slice(0, this.$data.dir.lastIndexOf("/"))
-          .split("\\")
-          .pop()
-          .split("/")
-          .pop();
+        if (this.$data.dir !== "/") {
+          this.$data.parentDirName = this.$data.dir
+            .slice(0, this.$data.dir.lastIndexOf("/"))
+            .split("\\")
+            .pop()
+            .split("/")
+            .pop();
+        } else this.$data.parentDirName = "/";
 
-        if (
-          (this.$data.newDir === "data" ||
-            this.$data.newDir === "library" ||
-            this.$data.newDir === "applications") &&
-          this.$data.tempDirName === "henry"
-        ) {
-          this.$data.dir =
-            this.$data.parentDirName +
-            "/" + // Parent folder
-            this.$data.tempDirName +
-            "/" + // Current folder
-            this.$data.newDirName; // New directory where we go
+        if (this.$data.newDir !== "..") {
+          let searchValue = this.$data.newDir;
+          let exist = false;
+          let accessAllowed = false;
+          let searchArr = [];
+          let accessArr = [];
 
-          this.$data.banner.sign = `Henry@Ecorp:/~${this.$data.newDirName}#`;
+          if (this.$data.tempDirName.toLowerCase() === "henry") {
+            searchArr = this.$data.dirHomeArr;
+            accessArr = this.$data.dirHomeAcc;
+          }
+          if (this.$data.tempDirName === "/") {
+            searchArr = this.$data.dirRootArr;
+            accessArr = this.$data.dirRootAcc;
+          }
+          if (this.$data.tempDirName.toLowerCase() === "data") {
+            searchArr = this.$data.dirDataArr;
+            accessArr = this.$data.dirDataAcc;
+          }
+          if (this.$data.tempDirName.toLowerCase() === "tools") {
+            searchArr = this.$data.dirToolsArr;
+            accessArr = this.$data.dirToolsAcc;
+          }
+          if (this.$data.tempDirName.toLowerCase() === "home") {
+            searchArr = this.$data.dirHomeDirArr;
+            accessArr = this.$data.dirHomeDirAcc;
+          }
+
+          for (let iCount = 0; iCount < searchArr.length; iCount++) {
+            if (searchArr[iCount].toLowerCase() === searchValue) {
+              exist = true;
+              if (accessArr[iCount] === 1) {
+                accessAllowed = true;
+              }
+            }
+          }
+
+          if (exist) {
+            if (accessAllowed) {
+              if (this.$data.tempDirName === "/") {
+                this.$data.dir =
+                  this.$data.parentDirName + this.$data.newDirName;
+              } else {
+                this.$data.dir =
+                  this.$data.parentDirName +
+                  "/" + // Parent folder
+                  this.$data.tempDirName +
+                  "/" + // Current folder
+                  this.$data.newDirName; // New directory where we go
+              }
+
+              if (this.$data.newDirName.toLowerCase() === "henry") {
+                this.$data.banner.sign = `Henry@Ecorp:~#`;
+              } else
+                this.$data.banner.sign = `Henry@Ecorp:/~${
+                  this.$data.newDirName
+                }#`;
+            } else {
+              this.send_to_terminal = `<p style="color:red;">[ERROR] You don't have permission to access this directory</p>`;
+            }
+          } else {
+            this.send_to_terminal = `<p style="color:red;">[ERROR] File or directory "${
+              this.$data.newDir
+            }" not found</p>`;
+          }
+
           this.$data.newDir = undefined;
         } else if (
           this.$data.newDir === ".." &&
           this.$data.parentDirName !== undefined
         ) {
           this.send_to_terminal = this.$data.parentDirName;
-          if (this.$data.parentDirName === "henry") {
+          if (this.$data.parentDirName.toLowerCase() === "henry") {
             this.$data.banner.sign = `Henry@Ecorp:~#`;
             this.$data.dir = "/home/henry";
           } else {
@@ -239,6 +431,9 @@ export default {
               0,
               this.$data.dir.lastIndexOf("/")
             );
+            if (this.$data.dir === "") {
+              this.$data.dir = "/";
+            }
           }
         } else if (this.$data.newDir === undefined) {
           this.$data.banner.sign = "Henry@Ecorp:~#";
@@ -250,26 +445,57 @@ export default {
         }
       }
       // ls commands
-      else if (value.trim().toLowerCase() === "ls") {
-        if (this.$data.banner.sign.slice(-5).toLowerCase() === "data#") {
-          this.send_to_terminal = "Data_Files.dat";
-        } else {
-          this.send_to_terminal = `<table class="table" style="width:70%; margin-top: 5px;">
-              <tr>
-                <td><p>efhuiu3rh37d.dat</p></td>
-                <td><p style="color:#838383;">Applications</p></td>
-                <td><p style="color:#838383;">Library</p></td>
-              </tr>
-              <tr>
-                <td>printers.xml</td>
-                <td><p style="color:#838383;">Data</p></td>
-                <td><p>d_rsa.pub</p></td>
-              </tr>
-            </table>`;
+      else if (
+        value
+          .trim()
+          .toLowerCase()
+          .match(/[^\s]+/g)[0] === "ls"
+      ) {
+        let files = [[]];
+        let classification = [[]];
+        let currDir = "";
+
+        if (this.$data.dir !== "/") {
+          currDir = this.$data.dir
+            .split("\\")
+            .pop()
+            .split("/")
+            .pop();
+        } else currDir = this.$data.dir;
+
+        if (currDir.toLowerCase() === "data") {
+          files = this.$data.dirRootArr;
+          classification = this.$data.dirRootClass;
+        } else if (currDir.toLowerCase() === "henry") {
+          files = this.$data.dirHomeArr;
+          classification = this.$data.dirHomeClass;
+        } else if (currDir.toLowerCase() === "home") {
+          files = this.$data.dirHomeDirArr;
+          classification = this.$data.dirHomeDirClass;
+        } else if (currDir.toLowerCase() === "/") {
+          files = this.$data.dirRootArr;
+          classification = this.$data.dirRootClass;
         }
 
-        // other commands
-      } else if (value.trim().toLowerCase() === "pwd") {
+        for (let iCount = 0; iCount < files.length; iCount++) {
+          if (classification[iCount] === 0) {
+            td += "<p>" + files[iCount] + "</p>";
+          } else if (classification[iCount] === 1) {
+            td += "<p style='color:#838383;'>" + files[iCount] + "</p>";
+          } else if (classification[iCount] === 2) {
+            td += "<p style='color:green;'>" + files[iCount] + "</p>";
+          } else if (classification[iCount] === 3) {
+            td +=
+              "<p style='color:#151515;background-color:green;width:30px;'>" +
+              files[iCount] +
+              "</p>";
+          }
+        }
+        this.send_to_terminal = td;
+      }
+
+      // other commands
+      else if (value.trim().toLowerCase() === "pwd") {
         this.send_to_terminal = this.$data.dir;
       } else {
         this.send_to_terminal = `'${value}' is not recognized as an internal command or external,
