@@ -30,6 +30,8 @@ export default {
       newDirName: "",
       tempDirName: "",
       parentDirName: " ",
+
+      // ROOT DIR
       dirRootArr: [
         "bin",
         "dev",
@@ -108,18 +110,27 @@ export default {
         0,
         0
       ],
+
+      // HOME/HENRY DIR
       dirHomeArr: [
         "efhuiu3rh37d.dat",
         "Applications",
-        "Library",
         "printers.xml",
         "Data",
         "Desktop",
         "Documents",
+        "Images",
+        "Videos",
+        "anaconda3",
+        "NVIDIA_CUDA-10.0_Samples",
+        "HandShake.cap",
+        "WPADump2_01.log.csv",
         "id_rsa.pub"
       ],
-      dirHomeClass: [0, 1, 1, 0, 1, 1, 1, 0],
-      dirHomeAcc: [1, 1, 1, 1, 1, 1, 1, 1],
+      dirHomeClass: [0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+      dirHomeAcc: [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1],
+
+      // ROOT/TOOLS DIR
       dirToolsArr: [
         "MANIFEST.in",
         "data",
@@ -130,10 +141,12 @@ export default {
       dirToolsClass: [0, 1, 0, 0, 0],
       dirToolsAcc: [1, 1, 1, 1, 1],
 
+      // ROOT/HOME DIR
       dirHomeDirArr: ["henry"],
       dirHomeDirClass: [0],
       dirHomeDirAcc: [1],
 
+      // ROOT/TOOLS/DATA DIR
       dirToolsDataArr: [
         "0fgizn7z02.dat",
         "3tkcl5awgy.dat",
@@ -149,19 +162,21 @@ export default {
       dirToolsDataClass: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       dirToolsDataAcc: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 
+      // ROOT/TMP DIR
       dirTmpArr: [
-        "Untitled Document 1~sav1.txt",
-        "Untitled Document 1~sav2.txt",
-        "Untitled Document 1~sav3.txt",
-        "Untitled Document 1~sav4.txt",
-        "Untitled Document 1~sav5.txt",
-        "Untitled Document 1~sav6.txt"
+        "Untitled_Document_1~sav1.txt",
+        "Untitled_Document_1~sav2.txt",
+        "Untitled_Document_1~sav3.txt",
+        "Untitled_Document_1~sav4.txt",
+        "Untitled_Document_1~sav5.txt",
+        "Untitled_Document_1~sav6.txt"
       ],
       dirTmpClass: [0, 0, 0, 0, 0, 0],
       dirTmpAcc: [1, 1, 1, 1, 1, 1],
 
+      // /HOME/HENRY/DESKTOP DIR
       dirDesktopArr: [
-        "HR Form Drafts",
+        "HR_Form_Drafts",
         "nems-integration.png",
         "faa-swim-sfdps-architecture.jpg",
         "faa-fri-nocc-artcc.png",
@@ -170,6 +185,7 @@ export default {
       dirDesktopClass: [1, 0, 0, 0, 0],
       dirDesktopAcc: [1, 1, 1, 1, 1],
 
+      // /HOME/HENRY/HRFORMSDRAFTS DIR
       dirHRFormDraftsArr: [
         "draft_1.png",
         "draft_2.png",
@@ -179,8 +195,9 @@ export default {
       dirHRFormDraftsClass: [0, 0, 0, 0],
       dirHRFormDraftsAcc: [1, 1, 1, 1],
 
+      // HOME/HENRY/DOCUMENTS
       dirDocumentsArr: [
-        "Employee Forms.pdf",
+        "Employee_Forms.pdf",
         "ground_floor.jpg",
         "storage_map.jpg",
         "pwd_memo.png",
@@ -351,29 +368,67 @@ export default {
         if (this.$data.newDir !== "..") {
           let searchValue = this.$data.newDir;
           let exist = false;
+          let directory = false;
           let accessAllowed = false;
           let searchArr = [];
           let accessArr = [];
+          let classArr = [];
 
           if (this.$data.tempDirName.toLowerCase() === "henry") {
             searchArr = this.$data.dirHomeArr;
             accessArr = this.$data.dirHomeAcc;
-          }
-          if (this.$data.tempDirName === "/") {
+            classArr = this.$data.dirHomeClass;
+          } else if (this.$data.tempDirName === "/") {
             searchArr = this.$data.dirRootArr;
             accessArr = this.$data.dirRootAcc;
-          }
-          if (this.$data.tempDirName.toLowerCase() === "data") {
+            classArr = this.$data.dirRootClass;
+          } else if (
+            this.$data.tempDirName.toLowerCase() === "data" &&
+            this.$data.parentDirName.toLowerCase() === "henry"
+          ) {
             searchArr = this.$data.dirDataArr;
             accessArr = this.$data.dirDataAcc;
-          }
-          if (this.$data.tempDirName.toLowerCase() === "tools") {
+            classArr = this.$data.dirDataClass;
+          } else if (
+            this.$data.tempDirName.toLowerCase() === "documents" &&
+            this.$data.parentDirName.toLowerCase() === "henry"
+          ) {
+            searchArr = this.$data.dirDocumentsArr;
+            accessArr = this.$data.dirDocumentsAcc;
+            classArr = this.$data.dirDocumentsClass;
+          } else if (
+            this.$data.tempDirName.toLowerCase() === "desktop" &&
+            this.$data.parentDirName.toLowerCase() === "henry"
+          ) {
+            searchArr = this.$data.dirDesktopArr;
+            accessArr = this.$data.dirDesktopAcc;
+            classArr = this.$data.dirDesktopClass;
+          } else if (
+            this.$data.tempDirName.toLowerCase() === "hr_form_drafts" &&
+            this.$data.parentDirName.toLowerCase() === "desktop"
+          ) {
+            searchArr = this.$data.dirHRFormDraftsArr;
+            accessArr = this.$data.dirHRFormDraftsAcc;
+            classArr = this.$data.dirHRFormDraftsClass;
+          } else if (
+            this.$data.tempDirName.toLowerCase() === "data" &&
+            this.$data.parentDirName.toLowerCase() === "tools"
+          ) {
+            searchArr = this.$data.dirToolsDataArr;
+            accessArr = this.$data.dirToolsDataAcc;
+            classArr = this.$data.dirToolsDataClass;
+          } else if (this.$data.tempDirName.toLowerCase() === "tools") {
             searchArr = this.$data.dirToolsArr;
             accessArr = this.$data.dirToolsAcc;
-          }
-          if (this.$data.tempDirName.toLowerCase() === "home") {
+            classArr = this.$data.dirToolsClass;
+          } else if (this.$data.tempDirName.toLowerCase() === "home") {
             searchArr = this.$data.dirHomeDirArr;
             accessArr = this.$data.dirHomeDirAcc;
+            classArr = this.$data.dirHomeDirClass;
+          } else if (this.$data.tempDirName.toLowerCase() === "tmp") {
+            searchArr = this.$data.dirTmpArr;
+            accessArr = this.$data.dirTmpAcc;
+            classArr = this.$data.dirTmpClass;
           }
 
           for (let iCount = 0; iCount < searchArr.length; iCount++) {
@@ -382,32 +437,37 @@ export default {
               if (accessArr[iCount] === 1) {
                 accessAllowed = true;
               }
+              if (classArr[iCount] !== 0) {
+                directory = true;
+              }
             }
           }
 
           if (exist) {
-            if (accessAllowed) {
-              if (this.$data.tempDirName === "/") {
-                this.$data.dir =
-                  this.$data.parentDirName + this.$data.newDirName;
-              } else {
-                this.$data.dir =
-                  this.$data.parentDirName +
-                  "/" + // Parent folder
-                  this.$data.tempDirName +
-                  "/" + // Current folder
-                  this.$data.newDirName; // New directory where we go
-              }
+            if (directory) {
+              if (accessAllowed) {
+                if (this.$data.tempDirName === "/") {
+                  this.$data.dir =
+                    this.$data.parentDirName + this.$data.newDirName;
+                } else {
+                  this.$data.dir =
+                    this.$data.parentDirName +
+                    "/" + // Parent folder
+                    this.$data.tempDirName +
+                    "/" + // Current folder
+                    this.$data.newDirName; // New directory where we go
+                }
 
-              if (this.$data.newDirName.toLowerCase() === "henry") {
-                this.$data.banner.sign = `Henry@Ecorp:~#`;
+                if (this.$data.newDirName.toLowerCase() === "henry") {
+                  this.$data.banner.sign = `Henry@Ecorp:~#`;
+                } else
+                  this.$data.banner.sign = `Henry@Ecorp:/~${
+                    this.$data.newDirName
+                  }#`;
               } else
-                this.$data.banner.sign = `Henry@Ecorp:/~${
-                  this.$data.newDirName
-                }#`;
-            } else {
-              this.send_to_terminal = `<p style="color:red;">[ERROR] You don't have permission to access this directory</p>`;
-            }
+                this.send_to_terminal = `<p style="color:red;">[ERROR] You don't have permission to access this directory</p>`;
+            } else
+              this.send_to_terminal = `<p style="color:red;">[ERROR] You can't cd to file</p>`;
           } else {
             this.send_to_terminal = `<p style="color:red;">[ERROR] File or directory "${
               this.$data.newDir
@@ -454,6 +514,7 @@ export default {
         let files = [[]];
         let classification = [[]];
         let currDir = "";
+        let parentDir = "";
 
         if (this.$data.dir !== "/") {
           currDir = this.$data.dir
@@ -463,18 +524,58 @@ export default {
             .pop();
         } else currDir = this.$data.dir;
 
-        if (currDir.toLowerCase() === "data") {
-          files = this.$data.dirRootArr;
-          classification = this.$data.dirRootClass;
-        } else if (currDir.toLowerCase() === "henry") {
+        parentDir = this.$data.dir
+          .slice(0, this.$data.dir.lastIndexOf("/"))
+          .split("\\")
+          .pop()
+          .split("/")
+          .pop();
+
+        if (currDir.toLowerCase() === "henry") {
           files = this.$data.dirHomeArr;
           classification = this.$data.dirHomeClass;
+        } else if (currDir === "/") {
+          files = this.$data.dirRootArr;
+          classification = this.$data.dirRootClass;
+        } else if (
+          currDir.toLowerCase() === "data" &&
+          parentDir.toLowerCase() === "henry"
+        ) {
+          files = this.$data.dirDataArr;
+          classification = this.$data.dirDataClass;
+        } else if (
+          currDir.toLowerCase() === "documents" &&
+          parentDir.toLowerCase() === "henry"
+        ) {
+          files = this.$data.dirDocumentsArr;
+          classification = this.$data.dirDocumentsClass;
+        } else if (
+          currDir.toLowerCase() === "desktop" &&
+          parentDir.toLowerCase() === "henry"
+        ) {
+          files = this.$data.dirDesktopArr;
+          classification = this.$data.dirDesktopClass;
+        } else if (
+          currDir.toLowerCase() === "hr_form_drafts" &&
+          parentDir.toLowerCase() === "desktop"
+        ) {
+          files = this.$data.dirHRFormDraftsArr;
+          classification = this.$data.dirHRFormDraftsClass;
+        } else if (
+          currDir.toLowerCase() === "data" &&
+          parentDir.toLowerCase() === "tools"
+        ) {
+          files = this.$data.dirToolsDataArr;
+          classification = this.$data.dirToolsDataClass;
+        } else if (currDir.toLowerCase() === "tools") {
+          files = this.$data.dirToolsArr;
+          classification = this.$data.dirToolsClass;
         } else if (currDir.toLowerCase() === "home") {
           files = this.$data.dirHomeDirArr;
           classification = this.$data.dirHomeDirClass;
-        } else if (currDir.toLowerCase() === "/") {
-          files = this.$data.dirRootArr;
-          classification = this.$data.dirRootClass;
+        } else if (currDir.toLowerCase() === "tmp") {
+          files = this.$data.dirTmpArr;
+          classification = this.$data.dirTmpClass;
         }
 
         for (let iCount = 0; iCount < files.length; iCount++) {
