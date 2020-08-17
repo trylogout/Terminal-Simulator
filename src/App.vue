@@ -143,7 +143,7 @@ export default {
 
       // ROOT/HOME DIR
       dirHomeDirArr: ["henry"],
-      dirHomeDirClass: [0],
+      dirHomeDirClass: [1],
       dirHomeDirAcc: [1],
 
       // ROOT/TOOLS/DATA DIR
@@ -598,6 +598,124 @@ export default {
       // other commands
       else if (value.trim().toLowerCase() === "pwd") {
         this.send_to_terminal = this.$data.dir;
+      } else if (
+        value
+          .trim()
+          .toLowerCase()
+          .match(/[^\s]+/g)[0] === "cat"
+      ) {
+        let exist = false;
+        let file = false;
+        let accessAllowed = false;
+        let searchArr = [];
+        let accessArr = [];
+        let classArr = [];
+
+        let searchValue = value
+          .trim()
+          .toLowerCase()
+          .match(/[^\s]+/g)[1];
+
+        if (this.$data.dir !== "/") {
+          this.$data.tempDirName = this.$data.dir
+            .split("\\")
+            .pop()
+            .split("/")
+            .pop();
+        } else this.$data.tempDirName = "/";
+
+        if (this.$data.dir !== "/") {
+          this.$data.parentDirName = this.$data.dir
+            .slice(0, this.$data.dir.lastIndexOf("/"))
+            .split("\\")
+            .pop()
+            .split("/")
+            .pop();
+        } else this.$data.parentDirName = "/";
+
+        if (this.$data.tempDirName.toLowerCase() === "henry") {
+          searchArr = this.$data.dirHomeArr;
+          accessArr = this.$data.dirHomeAcc;
+          classArr = this.$data.dirHomeClass;
+        } else if (this.$data.tempDirName === "/") {
+          searchArr = this.$data.dirRootArr;
+          accessArr = this.$data.dirRootAcc;
+          classArr = this.$data.dirRootClass;
+        } else if (
+          this.$data.tempDirName.toLowerCase() === "data" &&
+          this.$data.parentDirName.toLowerCase() === "henry"
+        ) {
+          searchArr = this.$data.dirDataArr;
+          accessArr = this.$data.dirDataAcc;
+          classArr = this.$data.dirDataClass;
+        } else if (
+          this.$data.tempDirName.toLowerCase() === "documents" &&
+          this.$data.parentDirName.toLowerCase() === "henry"
+        ) {
+          searchArr = this.$data.dirDocumentsArr;
+          accessArr = this.$data.dirDocumentsAcc;
+          classArr = this.$data.dirDocumentsClass;
+        } else if (
+          this.$data.tempDirName.toLowerCase() === "desktop" &&
+          this.$data.parentDirName.toLowerCase() === "henry"
+        ) {
+          searchArr = this.$data.dirDesktopArr;
+          accessArr = this.$data.dirDesktopAcc;
+          classArr = this.$data.dirDesktopClass;
+        } else if (
+          this.$data.tempDirName.toLowerCase() === "hr_form_drafts" &&
+          this.$data.parentDirName.toLowerCase() === "desktop"
+        ) {
+          searchArr = this.$data.dirHRFormDraftsArr;
+          accessArr = this.$data.dirHRFormDraftsAcc;
+          classArr = this.$data.dirHRFormDraftsClass;
+        } else if (
+          this.$data.tempDirName.toLowerCase() === "data" &&
+          this.$data.parentDirName.toLowerCase() === "tools"
+        ) {
+          searchArr = this.$data.dirToolsDataArr;
+          accessArr = this.$data.dirToolsDataAcc;
+          classArr = this.$data.dirToolsDataClass;
+        } else if (this.$data.tempDirName.toLowerCase() === "tools") {
+          searchArr = this.$data.dirToolsArr;
+          accessArr = this.$data.dirToolsAcc;
+          classArr = this.$data.dirToolsClass;
+        } else if (this.$data.tempDirName.toLowerCase() === "home") {
+          searchArr = this.$data.dirHomeDirArr;
+          accessArr = this.$data.dirHomeDirAcc;
+          classArr = this.$data.dirHomeDirClass;
+        } else if (this.$data.tempDirName.toLowerCase() === "tmp") {
+          searchArr = this.$data.dirTmpArr;
+          accessArr = this.$data.dirTmpAcc;
+          classArr = this.$data.dirTmpClass;
+        }
+
+        for (let iCount = 0; iCount < searchArr.length; iCount++) {
+          if (searchArr[iCount].toLowerCase() === searchValue) {
+            exist = true;
+            if (accessArr[iCount] === 1) {
+              accessAllowed = true;
+            }
+            if (classArr[iCount] === 0) {
+              file = true;
+            }
+          }
+        }
+
+        if (exist) {
+          if (file) {
+            if (accessAllowed) {
+              // PRINT FILENAME INFO
+              this.send_to_terminal = `${searchValue} full data.`;
+            } else
+              this.send_to_terminal = `<p style="color:red;">[ERROR] You don't have permission to access this directory</p>`;
+          } else
+            this.send_to_terminal = `<p style="color:red;">[ERROR] You can't cat directory</p>`;
+        } else {
+          this.send_to_terminal = `<p style="color:red;">[ERROR] File or directory "${
+            this.$data.newDir
+          }" not found</p>`;
+        }
       } else {
         this.send_to_terminal = `'${value}' is not recognized as an internal command or external,
 an executable program or a script`;
